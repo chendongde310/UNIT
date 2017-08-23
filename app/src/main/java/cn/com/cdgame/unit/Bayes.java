@@ -85,11 +85,11 @@ public class Bayes {
      * /(P(T1)*P(T2)*P(T3)*...P(Tn))
      */
     public Classification operation(String text) {
-        double PFlag = 100;
-        Classification FlagC = new Classification();
+        double PFlag = 10000;//临界值
         Classification MaxC = new Classification();
+        List<String> keys = HanLP.extractKeyword(text, 10);
         for (Classification c : CFList) {
-            List<String> keys = HanLP.extractKeyword(text, 6);
+            System.out.println(keys);
             double DA = 1.00;
             double DB = 1.00;
             for (String s : keys) {
@@ -108,11 +108,12 @@ public class Bayes {
             }
             double d1 = CFList.size();
             DA = DA * (1 / d1);
-            if (PFlag > DA / DB) {
+            Logger.d(c.name + "最终概率:" + DA / DB);
+            if (DA / DB < PFlag) {
                 PFlag = DA / DB;
                 MaxC = c;
             }
-            Logger.d("Flag:" + PFlag);
+
         }
         return MaxC;
     }
