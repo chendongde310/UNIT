@@ -85,7 +85,7 @@ public class Bayes {
      * /(P(T1)*P(T2)*P(T3)*...P(Tn))
      */
     public Classification operation(String text) {
-        double PFlag = 0;
+        double PFlag = 100;
         Classification FlagC = new Classification();
         Classification MaxC = new Classification();
         for (Classification c : CFList) {
@@ -108,7 +108,7 @@ public class Bayes {
             }
             double d1 = CFList.size();
             DA = DA * (1 / d1);
-            if (PFlag < DA / DB) {
+            if (PFlag > DA / DB) {
                 PFlag = DA / DB;
                 MaxC = c;
             }
